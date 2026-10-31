@@ -12,8 +12,14 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v3
+
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore BorderlessGaming.sln -NonInteractive
 
       - name: Build solution
         run: msbuild BorderlessGaming.sln /p:Configuration=Release /p:Platform="Any CPU" /m
@@ -23,4 +29,5 @@ jobs:
         with:
           name: Borderless-Gaming-Build
           path: |
-            **/bin/Release/**
+            BorderlessGaming/bin/Release/**
+            BorderlessGaming.Logic/bin/Release/**
