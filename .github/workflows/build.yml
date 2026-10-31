@@ -1,0 +1,26 @@
+
+name: Build Borderless Gaming
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build solution
+        run: msbuild BorderlessGaming.sln /p:Configuration=Release /p:Platform="Any CPU" /m
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: Borderless-Gaming-Build
+          path: |
+            **/bin/Release/**
